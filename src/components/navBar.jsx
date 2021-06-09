@@ -7,6 +7,7 @@ const NavBar = () => {
 		{ key: 2, label: "Customers", route: "/customers" },
 		{ key: 3, label: "Rentals", route: "/rentals" },
 		{ key: 4, label: "Login", route: "/login" },
+		{ key: 5, label: "Register", route: "/register" },
 	];
 	return (
 		<nav className="navbar navbar-expand-lg navbar-light bg-light fixed-top">

@@ -1,9 +1,11 @@
 import React, { Component } from "react";
 import Input from "./input";
+import Select from "./select";
 import Joi from "joi-browser";
 
 class Form extends Component {
 	state = { data: [], errors: [] };
+	schema = {};
 
 	validate = () => {
 		const errors = {};
@@ -51,21 +53,40 @@ class Form extends Component {
 		this.doSubmit();
 	};
 
-	renderInput(name, label) {
+	renderInput(name, label, type = "text") {
 		const { data, errors } = this.state;
 		return (
 			<Input
 				name={name}
-				value={data[name]}
 				label={label}
 				error={errors[name]}
+				value={data[name]}
+				type={type}
 				onChange={this.handleChange}
 			></Input>
 		);
 	}
 
+	renderSelect(name, label, options) {
+		const { data, errors } = this.state;
+		return (
+			<Select
+				name={name}
+				label={label}
+				error={errors[name]}
+				value={data[name]}
+				options={options}
+				onChange={this.handleChange}
+			></Select>
+		);
+	}
+
 	renderSubmitButton(label) {
-		return <button className="btn btn-primary">{label}</button>;
+		return (
+			<button disabled={this.validate()} className="btn btn-primary">
+				{label}
+			</button>
+		);
 	}
 }
 
