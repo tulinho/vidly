@@ -1,0 +1,5 @@
+{
+	"environment": "development",
+	"apiEndpoint": "http://localhost:3900/api",
+	"SentryDsn": "https://df3fe1c8163e4aabb58c2a2bf5a5b425@o863029.ingest.sentry.io/5822108"
+}
