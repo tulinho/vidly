@@ -2,11 +2,25 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import Like from "./common/like";
 import Table from "./common/table";
+import auth from "../services/authService";
 
 class MoviesTable extends Component {
 	render() {
 		const { movies, sortColumn, onLike, onDelete, onSort } = this.props;
-		const columns = [
+		const columns = this.getColumns(onLike, onDelete);
+		return (
+			<Table
+				columns={columns}
+				sortColumn={sortColumn}
+				data={movies}
+				onSort={onSort}
+			/>
+		);
+	}
+
+	getColumns(onLike, onDelete) {
+		const user = auth.getCurrentUser();
+		let columns = [
 			{
 				key: 1,
 				path: "title",
@@ -29,7 +43,9 @@ class MoviesTable extends Component {
 					/>
 				),
 			},
-			{
+		];
+		if (user && user.isAdmin)
+			columns.push({
 				key: 6,
 				content: (movie) => (
 					<button
@@ -41,16 +57,8 @@ class MoviesTable extends Component {
 						Delete
 					</button>
 				),
-			},
-		];
-		return (
-			<Table
-				columns={columns}
-				sortColumn={sortColumn}
-				data={movies}
-				onSort={onSort}
-			/>
-		);
+			});
+		return columns;
 	}
 }
 

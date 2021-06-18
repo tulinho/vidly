@@ -49,7 +49,7 @@ class MovieForm extends Form {
 	async doSubmit() {
 		const { data } = this.state;
 		await saveMovie(data);
-		this.props.history.push("/movies");
+		this.props.history.replace("/movies");
 	}
 	render() {
 		const { genres } = this.state;

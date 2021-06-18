@@ -1,18 +1,22 @@
 import React from "react";
-import Form from "./common/form";
+import { Redirect } from "react-router";
 import Joi from "joi-browser";
+import { toast } from "react-toastify";
+import Form from "./common/form";
+import auth from "../services/authService";
+import { register } from "../services/userService";
 
 class RegisterForm extends Form {
 	state = {
 		data: {
-			username: "",
+			email: "",
 			password: "",
 			name: "",
 		},
 		errors: {},
 	};
 	schema = {
-		username: Joi.string().email().required().label("Username"),
+		email: Joi.string().email().required().label("Username"),
 		password: Joi.string()
 			.alphanum()
 			.min(6)
@@ -21,15 +25,31 @@ class RegisterForm extends Form {
 			.label("Password"),
 		name: Joi.string().min(3).required().label("Name"),
 	};
-	doSubmit() {
-		console.log(this.state.data);
+	async doSubmit() {
+		try {
+			const { data: user } = this.state;
+			await register(user);
+			window.location = "/";
+		} catch (error) {
+			if (!(error.response && error.response.status === 400)) return;
+			this.displayErrorMessages(error);
+		}
+	}
+	displayErrorMessages(error) {
+		toast.error(error.response.data);
+		const errors = {
+			...this.state.errors,
+			...{ email: error.response.data },
+		};
+		this.setState({ errors });
 	}
 	render() {
+		if (auth.getCurrentUser()) return <Redirect to="/" />;
 		return (
 			<div>
 				<h1>Register</h1>
 				<form onSubmit={this.handleSubmit}>
-					{this.renderInput("username", "Username")}
+					{this.renderInput("email", "Username")}
 					{this.renderInput("password", "Password", "password")}
 					{this.renderInput("name", "Name")}
 					<br />

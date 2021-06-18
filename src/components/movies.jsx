@@ -1,15 +1,16 @@
 import React, { Component } from "react";
-import logger from "../services/loggingService";
-import ListGroup from "./common/listGroup";
-import MoviesTable from "./moviesTable";
-import Pagination from "./common/pagination";
+import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
+import _ from "lodash";
 import paginate from "../paginate";
+import MoviesTable from "./moviesTable";
+import ListGroup from "./common/listGroup";
+import Pagination from "./common/pagination";
+import SearchBox from "./common/searchBox";
+import auth from "../services/authService";
+import logger from "../services/loggingService";
 import { getGenres } from "../services/genreService";
 import { getMovies, deleteMovie } from "../services/movieService";
-import _ from "lodash";
-import { Link } from "react-router-dom";
-import SearchBox from "./common/searchBox";
-import { toast } from "react-toastify";
 
 class Movies extends Component {
 	state = {
@@ -107,6 +108,7 @@ class Movies extends Component {
 		return movies;
 	}
 	render() {
+		const user = auth.getCurrentUser();
 		const {
 			movies,
 			genres,
@@ -128,13 +130,15 @@ class Movies extends Component {
 					/>
 				</div>
 				<div className="col">
-					<Link
-						to="/movies/new"
-						className="btn btn-primary"
-						style={{ marginBottom: 20 }}
-					>
-						New Movie
-					</Link>
+					{user && (
+						<Link
+							to="/movies/new"
+							className="btn btn-primary"
+							style={{ marginBottom: 20 }}
+						>
+							New Movie
+						</Link>
+					)}
 					<p>Showing {totalItems} movies in the database.</p>
 					<SearchBox
 						placeHolder="Search..."
