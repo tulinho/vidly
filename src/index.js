@@ -9,8 +9,6 @@ import "bootstrap/dist/css/bootstrap.css";
 import "font-awesome/css/font-awesome.css";
 
 logger.init();
-logger.log("ENVIRONMENT", process.env.NODE_ENV);
-logger.log("API_URL", process.env.REACT_APP_API_ENDPOINT);
 
 ReactDOM.render(
 	<React.StrictMode>
