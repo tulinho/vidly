@@ -1,25 +1,18 @@
 import * as Sentry from "@sentry/react";
 import { Integrations } from "@sentry/tracing";
-import config from "../config.json";
 
 function init() {
-	if (config.environment === "development") {
-		return;
-	}
+	if (process.env.NODE_ENV === "development") return;
 	Sentry.init({
-		dsn: config.SentryDsn,
+		dsn: process.env.REACT_APP_SENTRY_DSN,
 		integrations: [new Integrations.BrowserTracing()],
-		environment: config.environment,
+		environment: process.env.NODE_ENV,
 		tracesSampleRate: 1.0,
 	});
 }
 
-let error,
-	log = null;
-if (config.environment === "development") {
-	error = console.log;
-	log = console.log;
-}
+let error, log;
+if (process.env.NODE_ENV === "development") error = log = console.log;
 
 const Logging = {
 	init,

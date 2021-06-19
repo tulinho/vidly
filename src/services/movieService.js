@@ -1,11 +1,9 @@
 import http from "./httpService";
-import config from "../config.json";
 
-const { apiEndpoint } = config;
-const moviesRoute = "/movies";
+const apiEndpoint = "/movies";
 
 const url = (id) => {
-	const url = `${apiEndpoint}${moviesRoute}`;
+	const url = apiEndpoint;
 	if (!id) return url;
 	return `${url}/${id}`;
 };

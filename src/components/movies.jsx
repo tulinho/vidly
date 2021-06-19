@@ -119,7 +119,6 @@ class Movies extends Component {
 		} = this.state;
 		const { totalItems, totalPages, pagedItems } = this.getPagedData();
 
-		if (!movies.length) return <p>There are no movies in the database.</p>;
 		return (
 			<div className="row">
 				<div className="col-3">

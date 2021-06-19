@@ -1,12 +1,10 @@
 import http from "./httpService";
 import auth from "./authService";
-import config from "../config.json";
 
-const { apiEndpoint } = config;
-const usersRoute = "/users";
+const apiEndpoint = "/users";
 
 const url = (id) => {
-	const url = `${apiEndpoint}${usersRoute}`;
+	const url = apiEndpoint;
 	if (!id) return url;
 	return `${url}/${id}`;
 };

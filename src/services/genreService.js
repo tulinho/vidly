@@ -1,13 +1,11 @@
 import http from "./httpService";
-import config from "../config.json";
 
-const { apiEndpoint } = config;
-const genreRoute = "/genres";
+const apiEndpoint = "/genres";
 
 const getUrl = (id) => {
-	const url = `${apiEndpoint}${genreRoute}`;
+	const url = apiEndpoint;
 	if (!id) return url;
-	return url + `/${id}`;
+	return `${url}/${id}`;
 };
 
 export async function getGenres() {
